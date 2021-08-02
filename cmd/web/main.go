@@ -41,10 +41,9 @@ func main() {
 
 	repo := handlers.NewRepo(&app)
 	handlers.NewHandlers(repo)
-
 	render.NewTemplates(&app)
 
-	fmt.Println(fmt.Sprintf("Staring application on port %s", portNumber))
+	fmt.Println(fmt.Sprintf("Staring server on port %s", portNumber))
 
 	srv := &http.Server{
 		Addr:    portNumber,
