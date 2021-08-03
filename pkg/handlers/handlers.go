@@ -45,12 +45,12 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-// About is the handler for the about page
+// Items is the handler for the items page
 func (m *Repository) Items(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, "items.page.tmpl", &models.TemplateData{})
 }
 
-// About is the handler for the about page
+// Contact is the handler for the contact page
 func (m *Repository) Contact(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, "contact.page.tmpl", &models.TemplateData{})
 }
