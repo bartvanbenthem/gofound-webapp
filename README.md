@@ -1,2 +1,2 @@
 # gofound-web
-Foundation and templates to develop golang web applications
+Foundation and templates to develop web applications in Go.
