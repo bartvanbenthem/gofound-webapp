@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/bartvanbenthem/gofound-web/internal/config"
@@ -55,7 +56,21 @@ func (m *Repository) Contact(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, r, "contact.page.tmpl", &models.TemplateData{})
 }
 
-// PostTest handles post
-func (m *Repository) PostTest(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("succesfull post\n"))
+// TestForm is the handler for the testform page
+func (m *Repository) TestForm(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, r, "testform.page.tmpl", &models.TemplateData{})
+}
+
+// PostTestForm handles post
+func (m *Repository) PostTestForm(w http.ResponseWriter, r *http.Request) {
+	// Call ParseForm() to parse the raw query and update r.PostForm and r.Form.
+	if err := r.ParseForm(); err != nil {
+		fmt.Fprintf(w, "ParseForm() err: %v", err)
+		return
+	}
+
+	name := r.FormValue("name")
+	address := r.FormValue("address")
+	fmt.Fprintf(w, "Name = %s\n", name)
+	fmt.Fprintf(w, "Address = %s\n", address)
 }
