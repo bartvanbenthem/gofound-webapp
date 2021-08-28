@@ -3,9 +3,9 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/bartvanbenthem/gofound-web/pkg/config"
-	"github.com/bartvanbenthem/gofound-web/pkg/models"
-	"github.com/bartvanbenthem/gofound-web/pkg/render"
+	"github.com/bartvanbenthem/gofound-web/internal/config"
+	"github.com/bartvanbenthem/gofound-web/internal/models"
+	"github.com/bartvanbenthem/gofound-web/internal/render"
 )
 
 // Repo the repository used by the handlers

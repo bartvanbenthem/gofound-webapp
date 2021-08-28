@@ -7,9 +7,9 @@ import (
 	"time"
 
 	"github.com/alexedwards/scs/v2"
-	"github.com/bartvanbenthem/gofound-web/pkg/config"
-	"github.com/bartvanbenthem/gofound-web/pkg/handlers"
-	"github.com/bartvanbenthem/gofound-web/pkg/render"
+	"github.com/bartvanbenthem/gofound-web/internal/config"
+	"github.com/bartvanbenthem/gofound-web/internal/handlers"
+	"github.com/bartvanbenthem/gofound-web/internal/render"
 )
 
 const portNumber = ":8080"

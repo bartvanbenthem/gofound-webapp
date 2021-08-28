@@ -8,8 +8,8 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"github.com/bartvanbenthem/gofound-web/pkg/config"
-	"github.com/bartvanbenthem/gofound-web/pkg/models"
+	"github.com/bartvanbenthem/gofound-web/internal/config"
+	"github.com/bartvanbenthem/gofound-web/internal/models"
 	"github.com/justinas/nosurf"
 )
 
