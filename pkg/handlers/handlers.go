@@ -54,3 +54,8 @@ func (m *Repository) Items(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) Contact(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, r, "contact.page.tmpl", &models.TemplateData{})
 }
+
+// PostTest handles post
+func (m *Repository) PostTest(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("succesfull post\n"))
+}
