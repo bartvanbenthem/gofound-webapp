@@ -7,9 +7,26 @@
             <div> <br /> </div>
                 <form method="POST" action="/testform">  
                     <input type="hidden" name="csrf_token" value="{{.CSRFToken}}"> 
-                    <label>Name</label><input name="name" type="text" value="" />
-                    <label>Address</label><input name="address" type="text" value="" />
+                    
+                    <label for="name">Name</label>
+                        {{with .Form.Errors.Get "name"}}
+                            <label class="text-danger">{{.}}</label>
+                        {{end}}
+                    <input class="form-control {{with .Form.Errors.Get "name"}} is-invalid {{end}}"
+                            id="name" autocomplete="off" type='text'
+                            name='name' value="" required>
+
+                    <label for="name">Location</label>
+                        {{with .Form.Errors.Get "location"}}
+                            <label class="text-danger">{{.}}</label>
+                        {{end}}
+                    <input class="form-control {{with .Form.Errors.Get "location"}} is-invalid {{end}}"
+                            id="location" autocomplete="off" type='text'
+                            name='location' value="" required>
+
+                    <hr>
                     <input type="submit" value="submit" />
+                    
                 </form>
             </div>
         </div>

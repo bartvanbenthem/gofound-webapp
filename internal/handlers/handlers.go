@@ -1,10 +1,11 @@
 package handlers
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/bartvanbenthem/gofound-web/internal/config"
+	"github.com/bartvanbenthem/gofound-web/internal/forms"
 	"github.com/bartvanbenthem/gofound-web/internal/models"
 	"github.com/bartvanbenthem/gofound-web/internal/render"
 )
@@ -58,19 +59,36 @@ func (m *Repository) Contact(w http.ResponseWriter, r *http.Request) {
 
 // TestForm is the handler for the testform page
 func (m *Repository) TestForm(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "testform.page.tmpl", &models.TemplateData{})
+	render.RenderTemplate(w, r, "testform.page.tmpl", &models.TemplateData{
+		Form: forms.New(nil),
+	})
 }
 
 // PostTestForm handles post
 func (m *Repository) PostTestForm(w http.ResponseWriter, r *http.Request) {
-	// Call ParseForm() to parse the raw query and update r.PostForm and r.Form.
-	if err := r.ParseForm(); err != nil {
-		fmt.Fprintf(w, "ParseForm() err: %v", err)
+	err := r.ParseForm()
+	if err != nil {
+		log.Println(err)
 		return
 	}
 
-	name := r.FormValue("name")
-	address := r.FormValue("address")
-	fmt.Fprintf(w, "Name = %s\n", name)
-	fmt.Fprintf(w, "Address = %s\n", address)
+	tf := models.TestForm{
+		Name:     r.Form.Get("name"),
+		Location: r.Form.Get("location"),
+	}
+
+	form := forms.New(r.PostForm)
+
+	form.Has("name", r)
+	form.Has("location", r)
+
+	if !form.Valid() {
+		data := make(map[string]interface{})
+		data["testform"] = tf
+		render.RenderTemplate(w, r, "testform.page.tmpl", &models.TemplateData{
+			Form: form,
+			Data: data,
+		})
+		return
+	}
 }
