@@ -4,10 +4,10 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/bartvanbenthem/gofound-web/internal/config"
-	"github.com/bartvanbenthem/gofound-web/internal/forms"
-	"github.com/bartvanbenthem/gofound-web/internal/models"
-	"github.com/bartvanbenthem/gofound-web/internal/render"
+	"github.com/bartvanbenthem/gofound-webapp/internal/config"
+	"github.com/bartvanbenthem/gofound-webapp/internal/forms"
+	"github.com/bartvanbenthem/gofound-webapp/internal/models"
+	"github.com/bartvanbenthem/gofound-webapp/internal/render"
 )
 
 // Repo the repository used by the handlers

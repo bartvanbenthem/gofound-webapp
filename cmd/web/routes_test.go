@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/bartvanbenthem/gofound-web/internal/config"
+	"github.com/bartvanbenthem/gofound-webapp/internal/config"
 	"github.com/go-chi/chi"
 )
 

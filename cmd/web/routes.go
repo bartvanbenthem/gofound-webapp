@@ -3,8 +3,8 @@ package main
 import (
 	"net/http"
 
-	"github.com/bartvanbenthem/gofound-web/internal/config"
-	"github.com/bartvanbenthem/gofound-web/internal/handlers"
+	"github.com/bartvanbenthem/gofound-webapp/internal/config"
+	"github.com/bartvanbenthem/gofound-webapp/internal/handlers"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 )

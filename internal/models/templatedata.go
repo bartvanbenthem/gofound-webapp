@@ -1,6 +1,6 @@
 package models
 
-import "github.com/bartvanbenthem/gofound-web/internal/forms"
+import "github.com/bartvanbenthem/gofound-webapp/internal/forms"
 
 // TemplateData holds data sent from handlers to templates
 type TemplateData struct {
