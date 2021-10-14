@@ -10,22 +10,26 @@ import (
 )
 
 func routes(app *config.AppConfig) http.Handler {
-	mux := chi.NewRouter()
+	router := chi.NewRouter()
 
-	mux.Use(middleware.Recoverer)
-	mux.Use(NoSurf)
-	mux.Use(SessionLoad)
+	router.Use(middleware.Recoverer)
+	router.Use(middleware.StripSlashes)
+	router.Use(middleware.RequestID)
+	router.Use(middleware.RealIP)
+	router.Use(middleware.Logger)
+	router.Use(NoSurf)
+	router.Use(SessionLoad)
 
-	mux.Get("/", handlers.Repo.Home)
-	mux.Get("/home", handlers.Repo.Home)
-	mux.Get("/about", handlers.Repo.About)
-	mux.Get("/items", handlers.Repo.Items)
-	mux.Get("/contact", handlers.Repo.Contact)
-	mux.Get("/testform", handlers.Repo.TestForm)
-	mux.Post("/testform", handlers.Repo.PostTestForm)
+	router.Get("/", handlers.Repo.Home)
+	router.Get("/home", handlers.Repo.Home)
+	router.Get("/about", handlers.Repo.About)
+	router.Get("/items", handlers.Repo.Items)
+	router.Get("/contact", handlers.Repo.Contact)
+	router.Get("/testform", handlers.Repo.TestForm)
+	router.Post("/testform", handlers.Repo.PostTestForm)
 
 	fileServer := http.FileServer(http.Dir("./static/"))
-	mux.Handle("/static/*", http.StripPrefix("/static", fileServer))
+	router.Handle("/static/*", http.StripPrefix("/static", fileServer))
 
-	return mux
+	return router
 }
