@@ -20,6 +20,8 @@ func routes(app *config.AppConfig) http.Handler {
 	router.Use(NoSurf)
 	router.Use(SessionLoad)
 
+	router.Get("/status", handlers.Repo.StatusHandler)
+
 	router.Get("/", handlers.Repo.Home)
 	router.Get("/home", handlers.Repo.Home)
 	router.Get("/about", handlers.Repo.About)
