@@ -40,7 +40,7 @@ func main() {
 }
 
 func run() error {
-	// what will the session consist of
+	// declare what the session can consist of
 	gob.Register(models.TestForm{})
 
 	// change this to true when in production
