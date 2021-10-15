@@ -1,6 +1,6 @@
 package models
 
 type TestForm struct {
-	Name     string
-	Location string
+	Name  string
+	Email string
 }

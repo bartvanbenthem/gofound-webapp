@@ -5,6 +5,9 @@
         <div class="row">
             <div>
             <div> <br /> </div>
+
+                {{$res := index .Data "testform"}}
+
                 <form method="POST" action="/testform">  
                     <input type="hidden" name="csrf_token" value="{{.CSRFToken}}"> 
                     
@@ -14,18 +17,18 @@
                         {{end}}
                     <input class="form-control {{with .Form.Errors.Get "name"}} is-invalid {{end}}"
                             id="name" autocomplete="off" type='text'
-                            name='name' value="" required>
+                            name='name' value="{{$res.Name}}" required>
 
-                    <label for="name">Location</label>
-                        {{with .Form.Errors.Get "location"}}
+                    <label for="name">Email</label>
+                        {{with .Form.Errors.Get "email"}}
                             <label class="text-danger">{{.}}</label>
                         {{end}}
-                    <input class="form-control {{with .Form.Errors.Get "location"}} is-invalid {{end}}"
-                            id="location" autocomplete="off" type='text'
-                            name='location' value="" required>
+                    <input class="form-control {{with .Form.Errors.Get "email"}} is-invalid {{end}}"
+                            id="email" autocomplete="off" type='text'
+                            name='email' value="{{$res.Email}}" required>
 
                     <hr>
-                    <input type="submit" value="submit" />
+                    <input type="submit" class="btn btn-primary" value="submit" />
                     
                 </form>
             </div>
