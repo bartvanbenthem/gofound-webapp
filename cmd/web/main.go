@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/gob"
 	"fmt"
 	"log"
 	"net/http"
@@ -9,6 +10,7 @@ import (
 	"github.com/alexedwards/scs/v2"
 	"github.com/bartvanbenthem/gofound-webapp/internal/config"
 	"github.com/bartvanbenthem/gofound-webapp/internal/handlers"
+	"github.com/bartvanbenthem/gofound-webapp/internal/models"
 	"github.com/bartvanbenthem/gofound-webapp/internal/render"
 )
 
@@ -38,6 +40,9 @@ func main() {
 }
 
 func run() error {
+	// what will the session consist of
+	gob.Register(models.TestForm{})
+
 	// change this to true when in production
 	app.InProduction = false
 

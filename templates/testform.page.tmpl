@@ -6,7 +6,7 @@
             <div>
             <div> <br /> </div>
 
-                {{$res := index .Data "testform"}}
+                {{$tf := index .Data "testform"}}
 
                 <form method="POST" action="/testform">  
                     <input type="hidden" name="csrf_token" value="{{.CSRFToken}}"> 
@@ -17,7 +17,7 @@
                         {{end}}
                     <input class="form-control {{with .Form.Errors.Get "name"}} is-invalid {{end}}"
                             id="name" autocomplete="off" type='text'
-                            name='name' value="{{$res.Name}}" required>
+                            name='name' value="{{$tf.Name}}" required>
 
                     <label for="name">Email</label>
                         {{with .Form.Errors.Get "email"}}
@@ -25,7 +25,7 @@
                         {{end}}
                     <input class="form-control {{with .Form.Errors.Get "email"}} is-invalid {{end}}"
                             id="email" autocomplete="off" type='text'
-                            name='email' value="{{$res.Email}}" required>
+                            name='email' value="{{$tf.Email}}" required>
 
                     <hr>
                     <input type="submit" class="btn btn-primary" value="submit" />

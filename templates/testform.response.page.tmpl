@@ -1,0 +1,15 @@
+{{template "base" .}}
+
+{{define "content"}}
+    <div class="container">
+        <div class="row">
+        
+            {{$tf := index .Data "testform"}}
+
+            <div class="col">
+                <h1>Thank you!</h1>
+                <p>"for posting this form {{$tf.Name}}"</p>
+            </div>
+        </div>
+    </div>
+{{end}}

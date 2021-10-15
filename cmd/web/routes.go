@@ -27,6 +27,7 @@ func routes(app *config.AppConfig) http.Handler {
 	router.Get("/contact", handlers.Repo.Contact)
 	router.Get("/testform", handlers.Repo.TestForm)
 	router.Post("/testform", handlers.Repo.PostTestForm)
+	router.Get("/testform-response", handlers.Repo.TestFormResponse)
 
 	fileServer := http.FileServer(http.Dir("./static/"))
 	router.Handle("/static/*", http.StripPrefix("/static", fileServer))

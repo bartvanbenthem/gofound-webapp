@@ -97,4 +97,27 @@ func (m *Repository) PostTestForm(w http.ResponseWriter, r *http.Request) {
 		})
 		return
 	}
+
+	m.App.Session.Put(r.Context(), "testform", tf)
+	http.Redirect(w, r, "/testform-response", http.StatusSeeOther)
+}
+
+// TestForm response displays the testform response page
+func (m *Repository) TestFormResponse(w http.ResponseWriter, r *http.Request) {
+	tf, ok := m.App.Session.Get(r.Context(), "testform").(models.TestForm)
+	if !ok {
+		log.Println("can't get item from session")
+		m.App.Session.Put(r.Context(), "error", "Can't get reservation from session")
+		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+		return
+	}
+
+	m.App.Session.Remove(r.Context(), "testform")
+
+	data := make(map[string]interface{})
+	data["testform"] = tf
+
+	render.RenderTemplate(w, r, "testform.response.page.tmpl", &models.TemplateData{
+		Data: data,
+	})
 }
