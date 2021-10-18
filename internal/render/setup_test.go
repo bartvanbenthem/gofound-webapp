@@ -2,7 +2,6 @@ package render
 
 import (
 	"encoding/gob"
-	"log"
 	"net/http"
 	"os"
 	"testing"
@@ -19,12 +18,6 @@ var testApp config.AppConfig
 func TestMain(m *testing.M) {
 	// declare what the session can consist of
 	gob.Register(models.TestForm{})
-
-	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
-	testApp.InfoLog = infoLog
-
-	errorLog := log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
-	testApp.ErrorLog = errorLog
 
 	// change this to true when in production
 	testApp.InProduction = false

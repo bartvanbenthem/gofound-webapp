@@ -6,7 +6,6 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"os"
 	"path/filepath"
 	"time"
 
@@ -27,12 +26,6 @@ var functions = template.FuncMap{}
 func getRoutes() http.Handler {
 	// declare what the session can consist of
 	gob.Register(models.TestForm{})
-
-	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
-	app.InfoLog = infoLog
-
-	errorLog := log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
-	app.ErrorLog = errorLog
 
 	// change this to true when in production
 	app.InProduction = false

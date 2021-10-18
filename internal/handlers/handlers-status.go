@@ -2,9 +2,8 @@ package handlers
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
-
-	"github.com/bartvanbenthem/gofound-webapp/internal/helpers"
 )
 
 func (m *Repository) StatusHandler(w http.ResponseWriter, r *http.Request) {
@@ -13,7 +12,7 @@ func (m *Repository) StatusHandler(w http.ResponseWriter, r *http.Request) {
 
 	js, err := json.MarshalIndent(currentStatus, "", "\t")
 	if err != nil {
-		helpers.ServerError(w, err)
+		log.Printf("Error: %s\n", err)
 	}
 
 	w.Header().Set("Content-Type", "application/json")
