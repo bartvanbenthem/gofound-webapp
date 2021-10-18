@@ -6,6 +6,7 @@ import (
 
 	"github.com/bartvanbenthem/gofound-webapp/internal/config"
 	"github.com/bartvanbenthem/gofound-webapp/internal/forms"
+	"github.com/bartvanbenthem/gofound-webapp/internal/helpers"
 	"github.com/bartvanbenthem/gofound-webapp/internal/models"
 	"github.com/bartvanbenthem/gofound-webapp/internal/render"
 )
@@ -73,7 +74,7 @@ func (m *Repository) TestForm(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) PostTestForm(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
-		log.Println(err)
+		helpers.ServerError(w, err)
 		return
 	}
 
