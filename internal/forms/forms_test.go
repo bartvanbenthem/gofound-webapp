@@ -8,7 +8,7 @@ import (
 )
 
 func TestForm_Valid(t *testing.T) {
-	r := httptest.NewRequest("POST", "/whatever", nil)
+	r := httptest.NewRequest("POST", "/dummy", nil)
 	form := New(r.PostForm)
 
 	isValid := form.Valid()
@@ -18,7 +18,7 @@ func TestForm_Valid(t *testing.T) {
 }
 
 func TestForm_Required(t *testing.T) {
-	r := httptest.NewRequest("POST", "/whatever", nil)
+	r := httptest.NewRequest("POST", "/dummy", nil)
 	form := New(r.PostForm)
 
 	form.Required("a", "b", "c")
@@ -31,7 +31,7 @@ func TestForm_Required(t *testing.T) {
 	postedData.Add("b", "a")
 	postedData.Add("c", "a")
 
-	r, _ = http.NewRequest("POST", "/whatever", nil)
+	r, _ = http.NewRequest("POST", "/dummy", nil)
 
 	r.PostForm = postedData
 	form = New(r.PostForm)
@@ -45,7 +45,7 @@ func TestForm_Has(t *testing.T) {
 	postedData := url.Values{}
 	form := New(url.Values{})
 
-	has := form.Has("whatever")
+	has := form.Has("dummy")
 	if has {
 		t.Error("form shows has field when it does not")
 	}
@@ -111,7 +111,7 @@ func TestForm_IsEmail(t *testing.T) {
 	}
 
 	postedValues = url.Values{}
-	postedValues.Add("email", "me@here.com")
+	postedValues.Add("email", "me@gofound.nl")
 	form = New(postedValues)
 
 	form.IsEmail("email")
