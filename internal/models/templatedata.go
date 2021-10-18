@@ -11,6 +11,6 @@ type TemplateData struct {
 	CSRFToken string
 	Warning   string
 	Error     string
-	Success   string
+	Flash     string
 	Form      *forms.Form
 }
