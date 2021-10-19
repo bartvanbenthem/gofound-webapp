@@ -48,6 +48,7 @@ func main() {
 func run() error {
 	// declare what the session can consist of
 	gob.Register(models.TestForm{})
+	gob.Register(models.MailData{})
 
 	// setting up mail channel
 	mailChan := make(chan models.MailData)

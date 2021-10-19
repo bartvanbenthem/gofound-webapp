@@ -111,6 +111,22 @@ func (m *Repository) PostContact(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) ResponseContact(w http.ResponseWriter, r *http.Request) {
+	md, ok := m.App.Session.Get(r.Context(), "contact").(models.MailData)
+	if !ok {
+		log.Println("can't get item from session")
+		m.App.Session.Put(r.Context(), "error", "Can't get MailData from session")
+		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+		return
+	}
+
+	m.App.Session.Remove(r.Context(), "contact")
+
+	data := make(map[string]interface{})
+	data["contact"] = md
+
+	render.RenderTemplate(w, r, "contact.response.page.tmpl", &models.TemplateData{
+		Data: data,
+	})
 }
 
 // TestForm is the handler for the testform page
@@ -163,7 +179,7 @@ func (m *Repository) ResponseTestForm(w http.ResponseWriter, r *http.Request) {
 	tf, ok := m.App.Session.Get(r.Context(), "testform").(models.TestForm)
 	if !ok {
 		log.Println("can't get item from session")
-		m.App.Session.Put(r.Context(), "error", "Can't get reservation from session")
+		m.App.Session.Put(r.Context(), "error", "Can't get testsession from session")
 		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
 		return
 	}
