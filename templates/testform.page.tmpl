@@ -19,7 +19,7 @@
                             id="name" autocomplete="off" type='text'
                             name='name' value="{{$tf.Name}}" required>
 
-                    <label for="name">Email</label>
+                    <label for="email">Email</label>
                         {{with .Form.Errors.Get "email"}}
                             <label class="text-danger">{{.}}</label>
                         {{end}}

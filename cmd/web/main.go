@@ -19,13 +19,19 @@ const portNumber = ":8080"
 var app config.AppConfig
 var session *scs.SessionManager
 
-// main is the main function
+// main function
 func main() {
 	err := run()
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	// Mail Listener channel
+	fmt.Printf("starting mail listener\n")
+	listenForMail()
+	defer close(app.MailChan)
+
+	// starting application
 	fmt.Println(fmt.Sprintf("Staring application on port %s", portNumber))
 
 	srv := &http.Server{
@@ -42,6 +48,10 @@ func main() {
 func run() error {
 	// declare what the session can consist of
 	gob.Register(models.TestForm{})
+
+	// setting up mail channel
+	mailChan := make(chan models.MailData)
+	app.MailChan = mailChan
 
 	// change this to true when in production
 	app.InProduction = false

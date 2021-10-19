@@ -54,7 +54,64 @@ func (m *Repository) Items(w http.ResponseWriter, r *http.Request) {
 
 // Contact is the handler for the contact page
 func (m *Repository) Contact(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "contact.page.tmpl", &models.TemplateData{})
+	var emptyContactForm models.MailData
+	data := make(map[string]interface{})
+	data["contact"] = emptyContactForm
+
+	render.RenderTemplate(w, r, "contact.page.tmpl", &models.TemplateData{
+		Form: forms.New(nil),
+		Data: data,
+	})
+}
+
+// PostContact is the handler for the send mail on contact page
+func (m *Repository) PostContact(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		log.Printf("Error: %s\n", err)
+		return
+	}
+
+	md := models.MailData{
+		Name:    r.Form.Get("name"),
+		From:    r.Form.Get("email"),
+		Subject: r.Form.Get("subject"),
+		Content: r.Form.Get("content"),
+	}
+
+	form := forms.New(r.PostForm)
+
+	form.Required("name", "email")
+	form.MinLength("name", 3)
+	form.IsEmail("email")
+
+	if !form.Valid() {
+		data := make(map[string]interface{})
+		data["contact"] = md
+		render.RenderTemplate(w, r, "contact.page.tmpl", &models.TemplateData{
+			Form: form,
+			Data: data,
+		})
+		return
+	}
+
+	m.App.Session.Put(r.Context(), "contact", md)
+	http.Redirect(w, r, "/contact-response", http.StatusSeeOther)
+
+	/////// TEST MAIL///////////////////////////
+	/*
+		msg := models.MailData{
+			To:      "bartvanbenthem@hotmail.com",
+			From:    "mail@gofound.nl",
+			Subject: "test",
+			Content: "hello <strong>world</strong> !",
+		}
+		app.MailChan <- msg
+	*/
+	///////////////////////////////////////////
+}
+
+func (m *Repository) ResponseContact(w http.ResponseWriter, r *http.Request) {
 }
 
 // TestForm is the handler for the testform page
@@ -103,7 +160,7 @@ func (m *Repository) PostTestForm(w http.ResponseWriter, r *http.Request) {
 }
 
 // TestForm response displays the testform response page
-func (m *Repository) TestFormResponse(w http.ResponseWriter, r *http.Request) {
+func (m *Repository) ResponseTestForm(w http.ResponseWriter, r *http.Request) {
 	tf, ok := m.App.Session.Get(r.Context(), "testform").(models.TestForm)
 	if !ok {
 		log.Println("can't get item from session")

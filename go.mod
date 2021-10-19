@@ -9,5 +9,5 @@ require (
 	github.com/go-chi/chi v1.5.4
 	github.com/go-chi/chi/v5 v5.0.3 // indirect
 	github.com/justinas/nosurf v1.1.1
-	github.com/xhit/go-simple-mail v2.2.2+incompatible // indirect
+	github.com/xhit/go-simple-mail v2.2.2+incompatible
 )

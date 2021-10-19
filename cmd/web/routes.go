@@ -26,10 +26,14 @@ func routes(app *config.AppConfig) http.Handler {
 	router.Get("/home", handlers.Repo.Home)
 	router.Get("/about", handlers.Repo.About)
 	router.Get("/items", handlers.Repo.Items)
+
 	router.Get("/contact", handlers.Repo.Contact)
+	router.Post("/contact", handlers.Repo.PostContact)
+	router.Get("/contact-response", handlers.Repo.ResponseContact)
+
 	router.Get("/testform", handlers.Repo.TestForm)
 	router.Post("/testform", handlers.Repo.PostTestForm)
-	router.Get("/testform-response", handlers.Repo.TestFormResponse)
+	router.Get("/testform-response", handlers.Repo.ResponseTestForm)
 
 	fileServer := http.FileServer(http.Dir("./static/"))
 	router.Handle("/static/*", http.StripPrefix("/static", fileServer))

@@ -63,10 +63,14 @@ func getRoutes() http.Handler {
 	router.Get("/home", Repo.Home)
 	router.Get("/about", Repo.About)
 	router.Get("/items", Repo.Items)
+
 	router.Get("/contact", Repo.Contact)
+	router.Post("/contact", Repo.PostContact)
+	router.Get("/contact-response", Repo.ResponseContact)
+
 	router.Get("/testform", Repo.TestForm)
 	router.Post("/testform", Repo.PostTestForm)
-	router.Get("/testform-response", Repo.TestFormResponse)
+	router.Get("/testform-response", Repo.ResponseTestForm)
 
 	fileServer := http.FileServer(http.Dir("./static/"))
 	router.Handle("/static/*", http.StripPrefix("/static", fileServer))
