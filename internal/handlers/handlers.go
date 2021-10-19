@@ -112,6 +112,7 @@ func (m *Repository) PostContact(w http.ResponseWriter, r *http.Request) {
 		Subject: "contact confirmation",
 		Content: `thanks for contacting us, 
 					we will reply as soon as possible`,
+		Template: "basic.html",
 	}
 
 	m.App.MailChan <- msg
