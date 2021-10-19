@@ -105,6 +105,17 @@ func (m *Repository) PostContact(w http.ResponseWriter, r *http.Request) {
 
 	m.App.MailChan <- msg
 
+	// send confirmation mail back to sender
+	msg = models.MailData{
+		To:      md.From,
+		From:    "noreply@gofound.nl",
+		Subject: "contact confirmation",
+		Content: `thanks for contacting us, 
+					we will reply as soon as possible`,
+	}
+
+	m.App.MailChan <- msg
+
 	m.App.Session.Put(r.Context(), "contact", md)
 	http.Redirect(w, r, "/contact-response", http.StatusSeeOther)
 

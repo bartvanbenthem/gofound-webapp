@@ -40,6 +40,7 @@ func sendMessage(m models.MailData) {
 	if err != nil {
 		log.Printf("Error: %s\n", err)
 	} else {
-		log.Printf("Email sent\n")
+		log.Printf("Email sent From: %s To: %s Subject: %s\n",
+			m.From, m.To, m.Subject)
 	}
 }
