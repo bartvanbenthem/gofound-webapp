@@ -81,8 +81,9 @@ func (m *Repository) PostContact(w http.ResponseWriter, r *http.Request) {
 
 	form := forms.New(r.PostForm)
 
-	form.Required("name", "email")
+	form.Required("name", "email", "subject", "content")
 	form.MinLength("name", 3)
+	form.MinLength("content", 10)
 	form.IsEmail("email")
 
 	if !form.Valid() {
@@ -95,20 +96,18 @@ func (m *Repository) PostContact(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	msg := models.MailData{
+		To:      "mail@gofound.nl",
+		From:    md.From,
+		Subject: md.Subject,
+		Content: md.Content,
+	}
+
+	m.App.MailChan <- msg
+
 	m.App.Session.Put(r.Context(), "contact", md)
 	http.Redirect(w, r, "/contact-response", http.StatusSeeOther)
 
-	/////// TEST MAIL///////////////////////////
-	/*
-		msg := models.MailData{
-			To:      "bartvanbenthem@hotmail.com",
-			From:    "mail@gofound.nl",
-			Subject: "test",
-			Content: "hello <strong>world</strong> !",
-		}
-		app.MailChan <- msg
-	*/
-	///////////////////////////////////////////
 }
 
 func (m *Repository) ResponseContact(w http.ResponseWriter, r *http.Request) {
