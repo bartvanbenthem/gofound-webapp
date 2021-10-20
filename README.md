@@ -17,7 +17,7 @@ $ go get github.com/mailhog/MailHog
 $ ~/go/bin/MailHog
 ```
 
-## Start the API Server
+## Start the WebServer
 ```shell
 $ ./build/bin/webserver
 ```
