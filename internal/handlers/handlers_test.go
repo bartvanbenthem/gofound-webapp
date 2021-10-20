@@ -30,6 +30,12 @@ var theTests = []struct {
 		{key: "email", value: "John@gofound.nl"},
 	}, http.StatusOK},
 	{"contact", "/contact", "GET", []postData{}, http.StatusOK},
+	{"postcontact", "/contact", "POST", []postData{
+		{key: "name", value: "Tester"},
+		{key: "email", value: "test@gofound.nl"},
+		{key: "subject", value: "test"},
+		{key: "content", value: "test"},
+	}, http.StatusOK},
 }
 
 func TestHandlers(t *testing.T) {
