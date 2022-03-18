@@ -1,5 +1,5 @@
 # gofound-webapp
-A project template for creating an basic web application in Go, with example content.
+A project template for creating an web application in Go, with example content.
 
 
 ### Used packages
