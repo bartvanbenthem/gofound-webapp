@@ -1,0 +1,18 @@
+version: '3'
+services:
+  mysql-db:
+    image: mysql:latest
+    hostname: mysql-db
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'snippetbox'
+      MYSQL_USER: 'web'
+      MYSQL_PASSWORD: 'pass'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - '3306:3306'
+    volumes:
+      - my-db-volume:/var/lib/mysql
+volumes:
+  my-db-volume:
