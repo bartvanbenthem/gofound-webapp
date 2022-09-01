@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"net/url"
 	"testing"
 
 	"github.com/bartvanbenthem/gofound-webapp/internal/assert"
@@ -77,7 +78,6 @@ func TestSnippetView(t *testing.T) {
 	}
 }
 
-/*
 func TestUserSignup(t *testing.T) {
 	app := newTestApplication(t)
 	ts := newTestServer(t, app.routes())
@@ -192,4 +192,3 @@ func TestUserSignup(t *testing.T) {
 		})
 	}
 }
-*/
