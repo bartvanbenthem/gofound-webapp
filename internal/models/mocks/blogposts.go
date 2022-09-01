@@ -32,3 +32,7 @@ func (m *BlogPostModel) Get(id int) (*models.BlogPost, error) {
 func (m *BlogPostModel) Latest() ([]*models.BlogPost, error) {
 	return []*models.BlogPost{mockBlogPost}, nil
 }
+
+func (m *BlogPostModel) All() ([]*models.BlogPost, error) {
+	return []*models.BlogPost{mockBlogPost}, nil
+}

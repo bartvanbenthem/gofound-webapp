@@ -10,6 +10,7 @@ type BlogPostModelInterface interface {
 	Insert(title string, content string, expires int) (int, error)
 	Get(id int) (*BlogPost, error)
 	Latest() ([]*BlogPost, error)
+	All() ([]*BlogPost, error)
 }
 
 type BlogPost struct {
@@ -64,6 +65,36 @@ func (m *BlogPostModel) Get(id int) (*BlogPost, error) {
 func (m *BlogPostModel) Latest() ([]*BlogPost, error) {
 	stmt := `SELECT id, title, content, created, expires FROM blogposts
     ORDER BY id DESC LIMIT 10`
+
+	rows, err := m.DB.Query(stmt)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	blogposts := []*BlogPost{}
+
+	for rows.Next() {
+		s := &BlogPost{}
+
+		err = rows.Scan(&s.ID, &s.Title, &s.Content, &s.Created, &s.Expires)
+		if err != nil {
+			return nil, err
+		}
+
+		blogposts = append(blogposts, s)
+	}
+
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return blogposts, nil
+}
+
+func (m *BlogPostModel) All() ([]*BlogPost, error) {
+	stmt := `SELECT id, title, content, created, expires FROM blogposts
+    ORDER BY id DESC`
 
 	rows, err := m.DB.Query(stmt)
 	if err != nil {

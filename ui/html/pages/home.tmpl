@@ -52,30 +52,6 @@
     </button>
   </div>
 
-  <div> </br> </div>
-  <div>  
-    <h2>Latest BlogPosts</h2>
-    {{if .BlogPosts}}
-     <table>
-        <tr>
-            <th>Title</th>
-            <th>Created</th>
-            <th>ID</th>
-        </tr>
-        {{range .BlogPosts}}
-        <tr>
-            <!-- Use the new clean URL style-->
-            <td><a href='/blogpost/view/{{.ID}}'>{{.Title}}</a></td>
-            <td>{{humanDate .Created}}</td>
-            <td>#{{.ID}}</td>
-        </tr>
-        {{end}}
-    </table>
-    {{else}}
-        <p>There's nothing to see here... yet!</p>
-    {{end}}
-  </div>
-
     <div class="row align-items-md-stretch">
       <div class="col-md-6">
         <div class="h-100 p-5 text-white bg-dark rounded-3">

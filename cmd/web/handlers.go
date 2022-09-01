@@ -231,9 +231,17 @@ func ping(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("OK"))
 }
 
-func (app *application) about(w http.ResponseWriter, r *http.Request) {
+func (app *application) blog(w http.ResponseWriter, r *http.Request) {
+	blogposts, err := app.blogposts.All()
+	if err != nil {
+		app.serverError(w, err)
+		return
+	}
+
 	data := app.newTemplateData(r)
-	app.render(w, http.StatusOK, "contact.tmpl", data)
+	data.BlogPosts = blogposts
+
+	app.render(w, http.StatusOK, "blog.tmpl", data)
 }
 
 func (app *application) contact(w http.ResponseWriter, r *http.Request) {

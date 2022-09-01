@@ -20,7 +20,7 @@ func TestPing(t *testing.T) {
 	assert.Equal(t, body, "OK")
 }
 
-func TestSnippetView(t *testing.T) {
+func TestBlogpostView(t *testing.T) {
 	app := newTestApplication(t)
 
 	ts := newTestServer(t, app.routes())
@@ -34,33 +34,33 @@ func TestSnippetView(t *testing.T) {
 	}{
 		{
 			name:     "Valid ID",
-			urlPath:  "/snippet/view/1",
+			urlPath:  "/blogpost/view/1",
 			wantCode: http.StatusOK,
 			wantBody: "An old silent pond...",
 		},
 		{
 			name:     "Non-existent ID",
-			urlPath:  "/snippet/view/2",
+			urlPath:  "/blogpost/view/2",
 			wantCode: http.StatusNotFound,
 		},
 		{
 			name:     "Negative ID",
-			urlPath:  "/snippet/view/-1",
+			urlPath:  "/blogpost/view/-1",
 			wantCode: http.StatusNotFound,
 		},
 		{
 			name:     "Decimal ID",
-			urlPath:  "/snippet/view/1.23",
+			urlPath:  "/blogpost/view/1.23",
 			wantCode: http.StatusNotFound,
 		},
 		{
 			name:     "String ID",
-			urlPath:  "/snippet/view/foo",
+			urlPath:  "/blogpost/view/foo",
 			wantCode: http.StatusNotFound,
 		},
 		{
 			name:     "Empty ID",
-			urlPath:  "/snippet/view/",
+			urlPath:  "/blogpost/view/",
 			wantCode: http.StatusNotFound,
 		},
 	}
@@ -87,9 +87,9 @@ func TestUserSignup(t *testing.T) {
 	validCSRFToken := extractCSRFToken(t, body)
 
 	const (
-		validName     = "Bob"
-		validPassword = "validPa$$word"
-		validEmail    = "bob@example.com"
+		validName     = "John"
+		validPassword = "myPa$$word"
+		validEmail    = "john@example.com"
 		formTag       = "<form action='/user/signup' method='POST' novalidate>"
 	)
 
