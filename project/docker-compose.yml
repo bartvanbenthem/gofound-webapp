@@ -2,11 +2,11 @@ version: '3'
 services:
   mysql-db:
     image: mysql:latest
-    hostname: mysql-db
-    container_name: mysql_db
+    hostname: gf-mysql-db
+    container_name: gf-mysql_db
     restart: always
     environment:
-      MYSQL_DATABASE: 'snippetbox'
+      MYSQL_DATABASE: 'gofound'
       MYSQL_USER: 'web'
       MYSQL_PASSWORD: 'pass'
       MYSQL_ROOT_PASSWORD: 'password'

@@ -16,12 +16,13 @@
             <li class="nav-item">
               <a class="nav-link" href="/contact">Contact</a>
             </li>
-          </ul>
             <li class="nav-item">
               {{if .IsAuthenticated}}
-                  <a class="nav-link" href='/snippet/create'>Create Post</a>
+                  <li> <a class="nav-link" href='/blogpost/create'>Create Post</a> </li>
               {{end}}
             </li>
+          </ul>
+
           <ul class="nav navbar-nav navbar-right">
             <li class="nav-item">
               {{if .IsAuthenticated}}

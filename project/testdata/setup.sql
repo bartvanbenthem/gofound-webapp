@@ -1,4 +1,4 @@
-CREATE TABLE snippets (
+CREATE TABLE blogposts (
     id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(100) NOT NULL,
     content TEXT NOT NULL,
@@ -6,7 +6,7 @@ CREATE TABLE snippets (
     expires DATETIME NOT NULL
 );
 
-CREATE INDEX idx_snippets_created ON snippets(created);
+CREATE INDEX idx_blogposts_created ON blogposts(created);
 
 CREATE TABLE users (
     id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -19,9 +19,9 @@ CREATE TABLE users (
 ALTER TABLE users ADD CONSTRAINT users_uc_email UNIQUE (email);
 
 INSERT INTO users (name, email, hashed_password, created) VALUES (
-    'Alice Jones',
-    'alice@example.com',
-    '$2a$12$NuTjWXm3KKntReFwyBVHyuf/to.HEwTy.eS206TNfkGfr6HzGJSWG',
+    'admin',
+    'admin@gofound.nl',
+    '$2a$12$zc57nAugE0dpPcAzTylZSO1.DVcOiw8.rERlfQ9K4M99mr/I8NsTe',
     '2022-01-01 10:00:00'
 );
 

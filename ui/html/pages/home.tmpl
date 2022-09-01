@@ -54,18 +54,18 @@
 
   <div> </br> </div>
   <div>  
-    <h2>Latest Snippets</h2>
-    {{if .Snippets}}
+    <h2>Latest BlogPosts</h2>
+    {{if .BlogPosts}}
      <table>
         <tr>
             <th>Title</th>
             <th>Created</th>
             <th>ID</th>
         </tr>
-        {{range .Snippets}}
+        {{range .BlogPosts}}
         <tr>
             <!-- Use the new clean URL style-->
-            <td><a href='/snippet/view/{{.ID}}'>{{.Title}}</a></td>
+            <td><a href='/blogpost/view/{{.ID}}'>{{.Title}}</a></td>
             <td>{{humanDate .Created}}</td>
             <td>#{{.ID}}</td>
         </tr>

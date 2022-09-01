@@ -1,7 +1,7 @@
-{{define "title"}}Create a New Snippet{{end}}
+{{define "title"}}Create a New BlogPost{{end}}
 
 {{define "main"}}
-<form action='/snippet/create' method='POST'>
+<form action='/blogpost/create' method='POST'>
     <!-- Include the CSRF token -->
     <input type='hidden' name='csrf_token' value='{{.CSRFToken}}'>
     <div>
@@ -28,7 +28,7 @@
         <input type='radio' name='expires' value='1' {{if (eq .Form.Expires 1)}}checked{{end}}> One Day
     </div>
     <div>
-        <input type='submit' value='Publish snippet'>
+        <input type='submit' value='Publish blogpost'>
     </div>
 </form>
 {{end}}

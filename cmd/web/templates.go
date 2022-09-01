@@ -12,8 +12,8 @@ import (
 
 type templateData struct {
 	CurrentYear     int
-	Snippet         *models.Snippet
-	Snippets        []*models.Snippet
+	BlogPost        *models.BlogPost
+	BlogPosts       []*models.BlogPost
 	Form            any
 	Flash           string
 	IsAuthenticated bool

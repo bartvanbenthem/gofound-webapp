@@ -45,7 +45,7 @@ func newTestApplication(t *testing.T) *application {
 	return &application{
 		errorLog:       log.New(io.Discard, "", 0),
 		infoLog:        log.New(io.Discard, "", 0),
-		snippets:       &mocks.SnippetModel{},
+		blogposts:      &mocks.BlogPostModel{},
 		users:          &mocks.UserModel{},
 		templateCache:  templateCache,
 		formDecoder:    formDecoder,
