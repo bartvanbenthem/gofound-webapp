@@ -25,13 +25,18 @@
                         <textarea name='content'>{{.Form.Content}}</textarea>
                     </div>
                     <div>
-                        <label>Delete in:</label>
-                        {{with .Form.FieldErrors.expires}}
+                        <label>Author:</label>
+                        {{with .Form.FieldErrors.author}}
                             <label class='error'>{{.}}</label>
                         {{end}}
-                        <input type='radio' name='expires' value='365' {{if (eq .Form.Expires 365)}}checked{{end}}> One Year
-                        <input type='radio' name='expires' value='7' {{if (eq .Form.Expires 7)}}checked{{end}}> One Week
-                        <input type='radio' name='expires' value='1' {{if (eq .Form.Expires 1)}}checked{{end}}> One Day
+                        <textarea name='author'>{{.Form.Author}}</textarea>
+                    </div>
+                    <div>
+                        <label>ImgURL:</label>
+                        {{with .Form.FieldErrors.img_urls}}
+                            <label class='error'>{{.}}</label>
+                        {{end}}
+                        <textarea name='img_url'>{{.Form.ImgURL}}</textarea>
                     </div>
                     <div>
                         <input type='submit' value='Publish blogpost'>

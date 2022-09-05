@@ -36,7 +36,7 @@ func TestBlogpostView(t *testing.T) {
 			name:     "Valid ID",
 			urlPath:  "/blogpost/view/1",
 			wantCode: http.StatusOK,
-			wantBody: "An old silent pond...",
+			wantBody: "mock post content...",
 		},
 		{
 			name:     "Non-existent ID",

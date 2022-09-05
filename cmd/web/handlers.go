@@ -53,9 +53,7 @@ func (app *application) blogpostView(w http.ResponseWriter, r *http.Request) {
 func (app *application) blogpostCreate(w http.ResponseWriter, r *http.Request) {
 	data := app.newTemplateData(r)
 
-	data.Form = blogpostCreateForm{
-		Expires: 365,
-	}
+	data.Form = blogpostCreateForm{}
 
 	app.render(w, http.StatusOK, "create.tmpl", data)
 }
@@ -63,7 +61,8 @@ func (app *application) blogpostCreate(w http.ResponseWriter, r *http.Request) {
 type blogpostCreateForm struct {
 	Title               string `form:"title"`
 	Content             string `form:"content"`
-	Expires             int    `form:"expires"`
+	Author              string `form:"author"`
+	ImgURL              string `form:"img_url"`
 	validator.Validator `form:"-"`
 }
 
@@ -79,8 +78,7 @@ func (app *application) blogpostCreatePost(w http.ResponseWriter, r *http.Reques
 	form.CheckField(validator.NotBlank(form.Title), "title", "This field cannot be blank")
 	form.CheckField(validator.MaxChars(form.Title, 100), "title", "This field cannot be more than 100 characters long")
 	form.CheckField(validator.NotBlank(form.Content), "content", "This field cannot be blank")
-
-	form.CheckField(validator.PermittedValue(form.Expires, 1, 7, 365), "expires", "This field must equal 1, 7 or 365")
+	form.CheckField(validator.NotBlank(form.Author), "author", "This field cannot be blank")
 
 	if !form.Valid() {
 		data := app.newTemplateData(r)
@@ -90,7 +88,7 @@ func (app *application) blogpostCreatePost(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	id, err := app.blogposts.Insert(form.Title, form.Content, form.Expires)
+	id, err := app.blogposts.Insert(form.Title, form.Content, form.Author, form.ImgURL)
 	if err != nil {
 		app.serverError(w, err)
 		return

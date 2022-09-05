@@ -9,12 +9,12 @@
                     <div class='metadata'>
                         <strong>{{.Title}}</strong>
                         <span>#{{.ID}}</span>
+                         <span>{{.Author}}</span>
                     </div>
                     <pre><code>{{.Content}}</code></pre>
                     <div class='metadata'>
                         <!-- Use the new template function here -->
                         <time>Created: {{humanDate .Created}}</time>
-                        <time>Expires: {{humanDate .Expires}}</time>
                     </div>
                 </div>
                 {{end}}

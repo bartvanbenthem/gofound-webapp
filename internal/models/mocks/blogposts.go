@@ -8,15 +8,16 @@ import (
 
 var mockBlogPost = &models.BlogPost{
 	ID:      1,
-	Title:   "An old silent pond",
-	Content: "An old silent pond...",
+	Title:   "mock post",
+	Content: "mock post content...",
 	Created: time.Now(),
-	Expires: time.Now(),
+	Author:  "Admin",
+	ImgURL:  "http://image_url/img",
 }
 
 type BlogPostModel struct{}
 
-func (m *BlogPostModel) Insert(title string, content string, expires int) (int, error) {
+func (m *BlogPostModel) Insert(title string, content string, author string, imgURL string) (int, error) {
 	return 2, nil
 }
 

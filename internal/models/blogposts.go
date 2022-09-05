@@ -7,7 +7,7 @@ import (
 )
 
 type BlogPostModelInterface interface {
-	Insert(title string, content string, expires int) (int, error)
+	Insert(title string, content string, author string, imgURL string) (int, error)
 	Get(id int) (*BlogPost, error)
 	Latest() ([]*BlogPost, error)
 	All() ([]*BlogPost, error)
@@ -18,18 +18,20 @@ type BlogPost struct {
 	Title   string
 	Content string
 	Created time.Time
-	Expires time.Time
+	Author  string
+	ImgURL  string
+	Version int
 }
 
 type BlogPostModel struct {
 	DB *sql.DB
 }
 
-func (m *BlogPostModel) Insert(title string, content string, expires int) (int, error) {
-	stmt := `INSERT INTO blogposts (title, content, created, expires)
-    VALUES(?, ?, UTC_TIMESTAMP(), DATE_ADD(UTC_TIMESTAMP(), INTERVAL ? DAY))`
+func (m *BlogPostModel) Insert(title string, content string, author string, imgURL string) (int, error) {
+	stmt := `INSERT INTO blogposts (title, content, created, author, img_url)
+    VALUES(?, ?, UTC_TIMESTAMP(), ?, ?)`
 
-	result, err := m.DB.Exec(stmt, title, content, expires)
+	result, err := m.DB.Exec(stmt, title, content, author, imgURL)
 	if err != nil {
 		return 0, err
 	}
@@ -43,14 +45,14 @@ func (m *BlogPostModel) Insert(title string, content string, expires int) (int, 
 }
 
 func (m *BlogPostModel) Get(id int) (*BlogPost, error) {
-	stmt := `SELECT id, title, content, created, expires FROM blogposts
-    WHERE expires > UTC_TIMESTAMP() AND id = ?`
+	stmt := `SELECT id, title, content, created, author, img_url FROM blogposts
+    WHERE id = ?`
 
 	row := m.DB.QueryRow(stmt, id)
 
 	s := &BlogPost{}
 
-	err := row.Scan(&s.ID, &s.Title, &s.Content, &s.Created, &s.Expires)
+	err := row.Scan(&s.ID, &s.Title, &s.Content, &s.Created, &s.Author, &s.ImgURL)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, ErrNoRecord
@@ -63,7 +65,7 @@ func (m *BlogPostModel) Get(id int) (*BlogPost, error) {
 }
 
 func (m *BlogPostModel) Latest() ([]*BlogPost, error) {
-	stmt := `SELECT id, title, content, created, expires FROM blogposts
+	stmt := `SELECT id, title, content, created, author, img_url FROM blogposts
     ORDER BY id DESC LIMIT 10`
 
 	rows, err := m.DB.Query(stmt)
@@ -77,7 +79,7 @@ func (m *BlogPostModel) Latest() ([]*BlogPost, error) {
 	for rows.Next() {
 		s := &BlogPost{}
 
-		err = rows.Scan(&s.ID, &s.Title, &s.Content, &s.Created, &s.Expires)
+		err = rows.Scan(&s.ID, &s.Title, &s.Content, &s.Created, &s.Author, &s.ImgURL)
 		if err != nil {
 			return nil, err
 		}
@@ -93,7 +95,7 @@ func (m *BlogPostModel) Latest() ([]*BlogPost, error) {
 }
 
 func (m *BlogPostModel) All() ([]*BlogPost, error) {
-	stmt := `SELECT id, title, content, created, expires FROM blogposts
+	stmt := `SELECT id, title, content, created, author, img_url FROM blogposts
     ORDER BY id DESC`
 
 	rows, err := m.DB.Query(stmt)
@@ -107,7 +109,7 @@ func (m *BlogPostModel) All() ([]*BlogPost, error) {
 	for rows.Next() {
 		s := &BlogPost{}
 
-		err = rows.Scan(&s.ID, &s.Title, &s.Content, &s.Created, &s.Expires)
+		err = rows.Scan(&s.ID, &s.Title, &s.Content, &s.Created, &s.Author, &s.ImgURL)
 		if err != nil {
 			return nil, err
 		}

@@ -3,7 +3,9 @@ CREATE TABLE blogposts (
     title VARCHAR(100) NOT NULL,
     content TEXT NOT NULL,
     created DATETIME NOT NULL,
-    expires DATETIME NOT NULL
+    author TEXT NOT NULL,
+    img_url TEXT,
+    version_nr INTEGER NOT NULL DEFAULT 1
 );
 
 CREATE INDEX idx_blogposts_created ON blogposts(created);
