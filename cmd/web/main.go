@@ -28,6 +28,7 @@ type application struct {
 	sessionManager *scs.SessionManager
 	mailChan       chan models.MailData
 	mailServer     models.MailServer
+	mailAddress    string
 }
 
 func main() {
@@ -37,6 +38,7 @@ func main() {
 	snmpport := flag.Int("snmp-port", 1025, "Mail Server port")
 	snmpuser := flag.String("snmp-user", "", "Mail Server username")
 	snmppass := flag.String("snmp-password", "", "Mail Server password")
+	mailaddr := flag.String("mailaddr", "mail@gofound.nl", "Mail address")
 
 	flag.Parse()
 
@@ -80,6 +82,7 @@ func main() {
 			Username: *snmpuser,
 			Password: *snmppass,
 		},
+		mailAddress: *mailaddr,
 	}
 
 	// Mail Listener channel

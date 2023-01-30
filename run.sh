@@ -10,3 +10,4 @@ go run ./cmd/web/ --addr=":4000" \
                   --snmp-port="1025" \
                   --snmp-user="" \
                   --snmp-password="" \
+                  --mailaddr="mail@gofound.nl"

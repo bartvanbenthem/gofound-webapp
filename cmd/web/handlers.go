@@ -225,10 +225,6 @@ func (app *application) userLogoutPost(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
-func ping(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("OK"))
-}
-
 func (app *application) blog(w http.ResponseWriter, r *http.Request) {
 	blogposts, err := app.blogposts.All()
 	if err != nil {
@@ -283,7 +279,7 @@ func (app *application) contactPost(w http.ResponseWriter, r *http.Request) {
 	}
 
 	msg := models.MailData{
-		To:      "mail@gofound.nl",
+		To:      app.mailAddress,
 		From:    form.From,
 		Subject: form.Subject,
 		Content: form.Content,
@@ -317,4 +313,8 @@ func (app *application) contactResponse(w http.ResponseWriter, r *http.Request) 
 	}
 
 	app.render(w, http.StatusOK, "contact.response.tmpl", data)
+}
+
+func ping(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("OK"))
 }
