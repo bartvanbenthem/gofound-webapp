@@ -2,9 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
-	"log"
-	"strings"
 	"time"
 
 	"github.com/bartvanbenthem/gofound-webapp/internal/models"
@@ -32,28 +29,18 @@ func (app *application) sendMessage(m models.MailData) {
 
 	client, err := server.Connect()
 	if err != nil {
-		log.Printf("Error: %s\n", err)
+		fmt.Printf("ERROR\t%s\t %s\n", time.Now().Format(time.RFC3339), err)
 	}
 
 	email := mail.NewMSG()
 	email.SetFrom(m.From).AddTo(m.To).SetSubject(m.Subject)
-	if m.Template == "" {
-		email.SetBody(mail.TextHTML, m.Content)
-	} else {
-		data, err := ioutil.ReadFile(fmt.Sprintf("./templates/email/%s", m.Template))
-		if err != nil {
-			log.Printf("Error: %s\n", err)
-		}
-		mailTemplate := string(data)
-		msgToSend := strings.Replace(mailTemplate, "[%body%]", m.Content, 1)
-		email.SetBody(mail.TextHTML, msgToSend)
-	}
+	email.SetBody(mail.TextHTML, m.Content)
 
 	err = email.Send(client)
 	if err != nil {
-		log.Printf("Error: %s\n", err)
+		fmt.Printf("ERROR\t%s\t %s\n", time.Now().Format(time.RFC3339), err)
 	} else {
-		log.Printf("Email sent From: %s To: %s Subject: %s\n",
-			m.From, m.To, m.Subject)
+		fmt.Printf("INFO\t%s\t Email sent From: %s To: %s\n",
+			time.Now().Format(time.RFC3339), m.From, m.To)
 	}
 }
