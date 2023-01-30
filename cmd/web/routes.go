@@ -25,12 +25,15 @@ func (app *application) routes() http.Handler {
 
 	router.Handler(http.MethodGet, "/", dynamic.ThenFunc(app.home))
 	router.Handler(http.MethodGet, "/blog", dynamic.ThenFunc(app.blog))
-	router.Handler(http.MethodGet, "/contact", dynamic.ThenFunc(app.contact))
 	router.Handler(http.MethodGet, "/blogpost/view/:id", dynamic.ThenFunc(app.blogpostView))
 	router.Handler(http.MethodGet, "/user/signup", dynamic.ThenFunc(app.userSignup))
 	router.Handler(http.MethodPost, "/user/signup", dynamic.ThenFunc(app.userSignupPost))
 	router.Handler(http.MethodGet, "/user/login", dynamic.ThenFunc(app.userLogin))
 	router.Handler(http.MethodPost, "/user/login", dynamic.ThenFunc(app.userLoginPost))
+
+	router.Handler(http.MethodGet, "/contact", dynamic.ThenFunc(app.contact))
+	router.Handler(http.MethodPost, "/contact", dynamic.ThenFunc(app.contactPost))
+	router.Handler(http.MethodGet, "/contactresponse", dynamic.ThenFunc(app.contactResponse))
 
 	protected := dynamic.Append(app.requireAuthentication)
 

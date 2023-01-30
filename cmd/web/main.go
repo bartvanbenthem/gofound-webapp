@@ -26,11 +26,17 @@ type application struct {
 	templateCache  map[string]*template.Template
 	formDecoder    *form.Decoder
 	sessionManager *scs.SessionManager
+	mailChan       chan models.MailData
+	mailServer     models.MailServer
 }
 
 func main() {
 	addr := flag.String("addr", ":4000", "HTTP network address")
 	dsn := flag.String("dsn", "web:pass@/gofound?parseTime=true", "MySQL data source name")
+	snmphost := flag.String("snmp-host", "localhost", "Mail server hostname")
+	snmpport := flag.Int("snmp-port", 1025, "Mail Server port")
+	snmpuser := flag.String("snmp-user", "", "Mail Server username")
+	snmppass := flag.String("snmp-password", "", "Mail Server password")
 
 	flag.Parse()
 
@@ -56,6 +62,9 @@ func main() {
 
 	sessionManager.Cookie.Secure = true
 
+	// setting up mail channel
+	mailChan := make(chan models.MailData)
+
 	app := &application{
 		errorLog:       errorLog,
 		infoLog:        infoLog,
@@ -64,7 +73,19 @@ func main() {
 		templateCache:  templateCache,
 		formDecoder:    formDecoder,
 		sessionManager: sessionManager,
+		mailChan:       mailChan,
+		mailServer: models.MailServer{
+			Host:     *snmphost,
+			Port:     *snmpport,
+			Username: *snmpuser,
+			Password: *snmppass,
+		},
 	}
+
+	// Mail Listener channel
+	infoLog.Printf("starting mail listener\n")
+	app.listenForMail()
+	defer close(app.mailChan)
 
 	tlsConfig := &tls.Config{
 		CurvePreferences: []tls.CurveID{tls.X25519, tls.CurveP256},

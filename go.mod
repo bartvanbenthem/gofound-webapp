@@ -12,3 +12,5 @@ require (
 	github.com/justinas/nosurf v1.1.1
 	golang.org/x/crypto v0.0.0-20220411220226-7b82a4e95df4
 )
+
+require github.com/xhit/go-simple-mail v2.2.2+incompatible // indirect

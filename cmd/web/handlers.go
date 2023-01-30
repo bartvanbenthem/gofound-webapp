@@ -242,7 +242,79 @@ func (app *application) blog(w http.ResponseWriter, r *http.Request) {
 	app.render(w, http.StatusOK, "blog.tmpl", data)
 }
 
+// MailData holds email
+type mailDataCreateForm struct {
+	Name                string `form:"name"`
+	From                string `form:"from"`
+	Subject             string `form:"subject"`
+	Content             string `form:"content"`
+	validator.Validator `form:"-"`
+}
+
 func (app *application) contact(w http.ResponseWriter, r *http.Request) {
 	data := app.newTemplateData(r)
+	data.Form = mailDataCreateForm{}
 	app.render(w, http.StatusOK, "contact.tmpl", data)
+}
+
+// PostContact is the handler for the send mail on contact page
+func (app *application) contactPost(w http.ResponseWriter, r *http.Request) {
+
+	var form mailDataCreateForm
+
+	err := app.decodePostForm(r, &form)
+	if err != nil {
+		app.clientError(w, http.StatusBadRequest)
+		return
+	}
+
+	form.CheckField(validator.NotBlank(form.Name), "name", "This field cannot be blank")
+	form.CheckField(validator.MaxChars(form.Name, 50), "name", "This field cannot be more than 50 characters long")
+	form.CheckField(validator.Matches(form.From, validator.EmailRX), "from", "This field must be a valid email address")
+	form.CheckField(validator.NotBlank(form.Subject), "subject", "This field cannot be blank")
+	form.CheckField(validator.MaxChars(form.Subject, 100), "subject", "This field cannot be more than 100 characters long")
+	form.CheckField(validator.NotBlank(form.Content), "content", "This field cannot be blank")
+
+	if !form.Valid() {
+		data := app.newTemplateData(r)
+		data.Form = form
+		app.render(w, http.StatusUnprocessableEntity, "contact.tmpl", data)
+		return
+	}
+
+	msg := models.MailData{
+		To:      "mail@gofound.nl",
+		From:    form.From,
+		Subject: form.Subject,
+		Content: form.Content,
+	}
+
+	app.mailChan <- msg
+
+	// send confirmation mail back to sender
+	msg = models.MailData{
+		To:      form.From,
+		From:    "noreply@gofound.nl",
+		Subject: "contact confirmation",
+		Content: `thanks for contacting us,
+						we will reply as soon as possible`,
+	}
+
+	app.mailChan <- msg
+
+	app.sessionManager.Put(r.Context(), "senderName", form.Name)
+	app.sessionManager.Put(r.Context(), "senderMail", form.From)
+
+	http.Redirect(w, r, "/contactresponse", http.StatusSeeOther)
+
+}
+
+func (app *application) contactResponse(w http.ResponseWriter, r *http.Request) {
+	data := app.newTemplateData(r)
+	data.Form = mailDataCreateForm{
+		Name: app.sessionManager.GetString(r.Context(), "senderName"),
+		From: app.sessionManager.GetString(r.Context(), "senderMail"),
+	}
+
+	app.render(w, http.StatusOK, "contact.response.tmpl", data)
 }
