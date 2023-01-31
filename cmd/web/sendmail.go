@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/bartvanbenthem/gofound-webapp/internal/models"
@@ -35,8 +34,7 @@ func (app *application) sendMessage(m models.MailData) {
 
 	email := mail.NewMSG()
 	email.SetFrom(m.From).AddTo(m.To).SetSubject(m.Subject)
-	body := fmt.Sprintf("%s \nPHONE: %s", m.Content, m.Phone)
-	email.SetBody(mail.TextHTML, body)
+	email.SetBody(mail.TextPlain, m.Content)
 
 	err = email.Send(client)
 	if err != nil {

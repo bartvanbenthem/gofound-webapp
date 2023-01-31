@@ -279,12 +279,16 @@ func (app *application) contactPost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// add provided name and phone number to the content body
+	body := fmt.Sprintf("%s \nNAME: %s \nPHONE: %s",
+		form.Content, form.Name, form.Phone)
+
 	msg := models.MailData{
 		To:      app.mailAddress,
 		From:    form.From,
 		Phone:   form.Phone,
 		Subject: form.Subject,
-		Content: form.Content,
+		Content: body,
 	}
 
 	app.mailChan <- msg
@@ -294,8 +298,7 @@ func (app *application) contactPost(w http.ResponseWriter, r *http.Request) {
 		To:      form.From,
 		From:    "noreply@gofound.nl",
 		Subject: "contact confirmation",
-		Content: `thanks for contacting us,
-						we will reply as soon as possible`,
+		Content: `thanks for contacting us, we will reply as soon as possible`,
 	}
 
 	app.mailChan <- msg
