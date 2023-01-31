@@ -1,6 +1,10 @@
 # gofound-webapp
-A project template for creating an web application in Go, with example content.
-
+Project template for creating web applications in Go, with example database & content.
+* Routing & middleware
+* HTTP session management
+* User registration & authentication
+* Database backend (SQL)
+* Templating & forms
 
 ### Used packages
 * github.com/alexedwards/scs/mysqlstore
