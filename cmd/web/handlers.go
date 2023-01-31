@@ -242,6 +242,7 @@ func (app *application) blog(w http.ResponseWriter, r *http.Request) {
 type mailDataCreateForm struct {
 	Name                string `form:"name"`
 	From                string `form:"from"`
+	Phone               string `form:"phone"`
 	Subject             string `form:"subject"`
 	Content             string `form:"content"`
 	validator.Validator `form:"-"`
@@ -268,7 +269,7 @@ func (app *application) contactPost(w http.ResponseWriter, r *http.Request) {
 	form.CheckField(validator.MaxChars(form.Name, 50), "name", "This field cannot be more than 50 characters long")
 	form.CheckField(validator.Matches(form.From, validator.EmailRX), "from", "This field must be a valid email address")
 	form.CheckField(validator.NotBlank(form.Subject), "subject", "This field cannot be blank")
-	form.CheckField(validator.MaxChars(form.Subject, 100), "subject", "This field cannot be more than 100 characters long")
+	form.CheckField(validator.MaxChars(form.Phone, 12), "subject", "This field cannot be more than 12 characters long")
 	form.CheckField(validator.NotBlank(form.Content), "content", "This field cannot be blank")
 
 	if !form.Valid() {
@@ -281,6 +282,7 @@ func (app *application) contactPost(w http.ResponseWriter, r *http.Request) {
 	msg := models.MailData{
 		To:      app.mailAddress,
 		From:    form.From,
+		Phone:   form.Phone,
 		Subject: form.Subject,
 		Content: form.Content,
 	}

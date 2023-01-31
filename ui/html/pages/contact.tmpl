@@ -25,6 +25,13 @@
                         <textarea name='from'>{{.Form.From}}</textarea>
                     </div>
                     <div>
+                        <label>Phone:</label>
+                        {{with .Form.FieldErrors.phone}}
+                            <label class='error'>{{.}}</label>
+                        {{end}}
+                        <textarea name='phone'>{{.Form.Phone}}</textarea>
+                    </div>
+                    <div>
                         <label>Subject:</label>
                         {{with .Form.FieldErrors.subject}}
                             <label class='error'>{{.}}</label>
