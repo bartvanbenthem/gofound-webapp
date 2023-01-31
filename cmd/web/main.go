@@ -38,7 +38,9 @@ func main() {
 	smtpport := flag.Int("smtp-port", 1025, "Mail Server port")
 	smtpuser := flag.String("smtp-user", "", "Mail Server username")
 	smtppass := flag.String("smtp-password", "", "Mail Server password")
-	mailaddr := flag.String("mailaddr", "mail@gofound.nl", "Mail address")
+	mailaddr := flag.String("mail-address", "mail@gofound.nl", "Mail address")
+	tlscert := flag.String("cert", "./tls/cert.pem", "Full path and TLS cert")
+	tlskey := flag.String("key", "./tls/key.pem", "Full path and TLS key")
 
 	flag.Parse()
 
@@ -105,7 +107,7 @@ func main() {
 	}
 
 	infoLog.Printf("Starting server on %s", *addr)
-	err = srv.ListenAndServeTLS("./tls/cert.pem", "./tls/key.pem")
+	err = srv.ListenAndServeTLS(*tlscert, *tlskey)
 	errorLog.Fatal(err)
 }
 

@@ -10,4 +10,6 @@ go run ./cmd/web/ --addr=":4000" \
                   --smtp-port="1025" \
                   --smtp-user="" \
                   --smtp-password="" \
-                  --mailaddr="mail@gofound.nl"
+                  --mail-address="mail@gofound.nl" \
+                  --cert="./tls/cert.pem" \
+                  --key="./tls/key.pem"
