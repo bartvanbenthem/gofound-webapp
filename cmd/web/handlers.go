@@ -298,7 +298,7 @@ func (app *application) contactPost(w http.ResponseWriter, r *http.Request) {
 		To:      form.From,
 		From:    "noreply@gofound.nl",
 		Subject: "contact confirmation",
-		Content: `thanks for contacting us, we will reply as soon as possible`,
+		Content: `thanks for contacting us, we will reply as soon as possible.`,
 	}
 
 	app.mailChan <- msg
