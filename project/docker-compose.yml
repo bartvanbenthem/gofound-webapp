@@ -1,6 +1,6 @@
 version: '3'
 services:
-  mysql-db:
+  mysql-db-gf:
     image: mysql:latest
     hostname: gf-mysql-db
     container_name: gf-mysql_db

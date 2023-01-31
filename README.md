@@ -54,6 +54,12 @@ $ go get github.com/mailhog/MailHog
 $ ~/go/bin/MailHog
 ```
 
+## Test login
+Use the provisioned user:
+* Username: admin@gofound.nl 
+* Password: administrator
+
+
 ## create self signed certificates
 ```bash
 cd tls
