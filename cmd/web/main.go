@@ -34,10 +34,10 @@ type application struct {
 func main() {
 	addr := flag.String("addr", ":4000", "HTTP network address")
 	dsn := flag.String("dsn", "web:pass@/gofound?parseTime=true", "MySQL data source name")
-	snmphost := flag.String("snmp-host", "localhost", "Mail server hostname")
-	snmpport := flag.Int("snmp-port", 1025, "Mail Server port")
-	snmpuser := flag.String("snmp-user", "", "Mail Server username")
-	snmppass := flag.String("snmp-password", "", "Mail Server password")
+	smtphost := flag.String("smtp-host", "localhost", "Mail server hostname")
+	smtpport := flag.Int("smtp-port", 1025, "Mail Server port")
+	smtpuser := flag.String("smtp-user", "", "Mail Server username")
+	smtppass := flag.String("smtp-password", "", "Mail Server password")
 	mailaddr := flag.String("mailaddr", "mail@gofound.nl", "Mail address")
 
 	flag.Parse()
@@ -77,10 +77,10 @@ func main() {
 		sessionManager: sessionManager,
 		mailChan:       mailChan,
 		mailServer: models.MailServer{
-			Host:     *snmphost,
-			Port:     *snmpport,
-			Username: *snmpuser,
-			Password: *snmppass,
+			Host:     *smtphost,
+			Port:     *smtpport,
+			Username: *smtpuser,
+			Password: *smtppass,
 		},
 		mailAddress: *mailaddr,
 	}

@@ -6,8 +6,8 @@
 go test -vet=off -v ./cmd/web/
 go run ./cmd/web/ --addr=":4000" \
                   --dsn="web:pass@/gofound?parseTime=true" \
-                  --snmp-host="localhost" \
-                  --snmp-port="1025" \
-                  --snmp-user="" \
-                  --snmp-password="" \
+                  --smtp-host="localhost" \
+                  --smtp-port="1025" \
+                  --smtp-user="" \
+                  --smtp-password="" \
                   --mailaddr="mail@gofound.nl"
