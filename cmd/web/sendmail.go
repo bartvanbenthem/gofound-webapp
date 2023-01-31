@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/bartvanbenthem/gofound-webapp/internal/models"
@@ -18,6 +17,7 @@ func (app *application) listenForMail() {
 }
 
 func (app *application) sendMessage(m models.MailData) {
+
 	server := mail.NewSMTPClient()
 	server.Host = app.mailServer.Host
 	server.Port = app.mailServer.Port
@@ -29,7 +29,7 @@ func (app *application) sendMessage(m models.MailData) {
 
 	client, err := server.Connect()
 	if err != nil {
-		fmt.Printf("ERROR\t%s\t %s\n", time.Now().Format(time.RFC3339), err)
+		app.errorLog.Printf("%s", err)
 	}
 
 	email := mail.NewMSG()
@@ -38,9 +38,8 @@ func (app *application) sendMessage(m models.MailData) {
 
 	err = email.Send(client)
 	if err != nil {
-		fmt.Printf("ERROR\t%s\t %s\n", time.Now().Format(time.RFC3339), err)
+		app.errorLog.Printf("%s", err)
 	} else {
-		fmt.Printf("INFO\t%s\t Email sent From: %s To: %s\n",
-			time.Now().Format(time.RFC3339), m.From, m.To)
+		app.infoLog.Printf("Email sent From: %s To: %s\n", m.From, m.To)
 	}
 }
