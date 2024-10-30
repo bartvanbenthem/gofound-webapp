@@ -1,5 +1,5 @@
 # gofound-webapp
-Project template for creating web applications in Go, with example database & content.
+Project template for creating server side rendered web applications in Go, with example database & content.
 * Routing & middleware
 * HTTP session management
 * User registration & authentication
